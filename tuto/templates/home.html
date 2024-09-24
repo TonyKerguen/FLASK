@@ -1,41 +1,10 @@
 {% extends "base.html" %}
 {% block main %}
-<ul>
-    <div class="sample">
-        {% for x in books %}
-        <img src="{{ url_for('static', filename='images/'+x.img)
-        }}" alt="{{x.title}}" title="{{x.title}}">
-        {% endfor %}
-    </div>
-</ul>
+<h1> {{ title }}</h1>
+<div class="sample">
+    {% for x in books %}
+    <a href="{{url_for('detail', id=x.id)}}"><img src="{{ url_for('static', filename='images/'+x.img)}}" alt="{{x.title}}" title="{{x.title}}">
+    </a>
+    {% endfor %}
+</div>
 {% endblock %}
-
-
-
-
-<!-- <!doctype html>
-<html>
-    <head>
-        <title>{{ title }}</title>
-        <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
-    </head>
-    <body>
-        <h1>{{ title }}</h1>
-        <ul>
-            {% for x in names %}
-            <li>{{ x }}</li>
-            {% endfor %}
-        </ul>
-        <ul>
-            {% for x in data %}
-            <div>
-                <ul>
-                <li>{{ x.author }}</li>
-                <li>{{ x.title }}</li>
-                <li>{{ x.price }}</li>
-                <li><img src="{{ url_for('static', filename='images/'+x.img) }}" alt=""></li>
-            </div>
-            {% endfor %}
-        </ul>
-    </body>
-</html> -->

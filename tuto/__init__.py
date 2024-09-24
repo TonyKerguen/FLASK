@@ -1,3 +1,4 @@
-from .app import app
+from .app import app , db
 import tuto.views
-import yaml , os.path
+import tuto.commands
+import tuto.models
