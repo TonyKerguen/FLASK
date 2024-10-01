@@ -15,3 +15,5 @@ def mkpath(p):
 
 app.config['SQLALCHEMY_DATABASE_URI'] = ('sqlite:///'+mkpath('../tuto.db'))
 db = SQLAlchemy(app)
+
+app. config['SECRET_KEY'] = "0c7f25c9-3afb-4b3d-9d3f-d99545821e29"
