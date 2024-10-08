@@ -18,9 +18,8 @@ for book in Books:
 # def get_sample():
 #     return Books[0:10]
 
-def get_sample ():
+def get_sample():
     return Book.query.limit(15).all()
-
 
 
 class Author(db.Model):
@@ -41,3 +40,6 @@ class Book(db.Model):
 
     def __repr__ (self ):
         return "<Book (%d) %s>" % (self.id, self.title)
+    
+def get_author(idd):
+    return Author.query.filter(Author.id == idd)[0]
