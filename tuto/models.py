@@ -1,5 +1,3 @@
-
-
 import yaml, os.path
 from .app import db
 from flask_login import UserMixin
@@ -15,7 +13,11 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(64))
     
     def get_id(self):
-        return self.username
+        if isinstance(self, User):
+            return self.username
+        else:
+            raise AttributeError("L'objet n'est pas une instance de User.")
+
     
 
 

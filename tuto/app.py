@@ -8,6 +8,7 @@ app = Flask(__name__)
 app. config['BOOTSTRAP_SERVE_LOCAL'] = True
 bootstrap = Bootstrap5(app)
 login_manager = LoginManager(app)
+login_manager.login_view = "login"
 
 import os.path
 def mkpath (p):
@@ -20,4 +21,4 @@ from flask_sqlalchemy import SQLAlchemy
 app.config['SQLALCHEMY_DATABASE_URI'] = ('sqlite:///'+mkpath('../tuto.db'))
 db = SQLAlchemy(app)
 
-app.config['SECRET_KEY'] = "524c0dc7-d78d-43f2-91f9-14eff822f086"
+app.config['SECRET_KEY'] = "b4314bd8-340d-4c6d-968a-733c2b6fc403"
