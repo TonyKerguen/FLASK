@@ -1,19 +1,23 @@
 from flask import Flask
 from flask_bootstrap import Bootstrap5
-import os.path
-from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager
+
+
 
 app = Flask(__name__)
-app.config['BOOTSTRAP_SERVE_LOCAL'] = True
+app. config['BOOTSTRAP_SERVE_LOCAL'] = True
 bootstrap = Bootstrap5(app)
+login_manager = LoginManager(app)
 
-def mkpath(p):
-    return os.path.normpath (
-    os.path.join(
-    os.path.dirname(__file__),
-    p))
-
+import os.path
+def mkpath (p):
+    return os.path. normpath(
+        os.path.join(
+            os.path.dirname( __file__ ),
+            p))
+    
+from flask_sqlalchemy import SQLAlchemy
 app.config['SQLALCHEMY_DATABASE_URI'] = ('sqlite:///'+mkpath('../tuto.db'))
 db = SQLAlchemy(app)
 
-app. config['SECRET_KEY'] = "0c7f25c9-3afb-4b3d-9d3f-d99545821e29"
+app.config['SECRET_KEY'] = "524c0dc7-d78d-43f2-91f9-14eff822f086"
