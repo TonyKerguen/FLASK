@@ -86,3 +86,19 @@ main>.container {
 .buy-btn:hover {
     background-color: #1b5e20;
 }
+
+.edit-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: orange;
+    color: #fff;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+}
+
+.edit-btn:hover {
+    background-color: orangered;
+}

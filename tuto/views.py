@@ -30,7 +30,7 @@ class loginForm(FlaskForm):
 class BookForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
     price = FloatField('Price', validators=[DataRequired()])
-    image = StringField('Image URL', validators=[DataRequired()])  # For simplicity, just a URL
+    image = StringField('Image URL', validators=[DataRequired()])
     submit = SubmitField('Save Changes')
 
 class AuthorForm(FlaskForm):
@@ -115,6 +115,7 @@ def logout():
 def search_books_by_author():
     author_name = request.args.get('author_name', '')
     if author_name:
+        # on cherche dans la bd tout les autheurs qui contiennent "author_name"
         authors = Author.query.filter(Author.name.ilike(f"%{author_name}%")).all()
         books = []
         for author in authors:
@@ -126,6 +127,7 @@ def search_books_by_author():
             books=books
         )
     else:
+        #si on clic sur shearch sans rien ecrire
         return render_template(
             "home.html",
             title="No Author Specified",
@@ -136,17 +138,14 @@ def search_books_by_author():
 @login_required
 def edit_book(id):
     book = Book.query.get_or_404(id)
-    form = BookForm(obj=book)  # Prepopulate form with book data
+    form = BookForm(obj=book)
 
+    # on verifit si le formulaire est valide
     if form.validate_on_submit():
-        # Update the book's details
         book.title = form.title.data
         book.price = form.price.data
         book.image = form.image.data
-
-        # Save the changes
         db.session.commit()
-        flash(f"Book '{book.title}' updated successfully!", "success")
         return redirect(url_for('detail', id=book.id-1))
 
     return render_template('edit_book.html', form=form, book=book)
