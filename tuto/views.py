@@ -1,20 +1,20 @@
 from .app import app
-from flask import render_template
-from .models import get_sample, get_author
+from flask import flash, render_template
+from .models import Book, get_sample, get_author
 from flask_wtf import FlaskForm
-from wtforms import StringField, HiddenField
+from wtforms import FloatField, StringField, HiddenField, SubmitField
 from wtforms.validators import DataRequired
 from flask import url_for, redirect
 from .app import db
 from wtforms import PasswordField
-from .models import User
+from .models import User, Author
 from hashlib import sha256
 from flask_login import login_user, current_user
 from flask import request
 from flask_login import logout_user
 from flask_login import login_required
 
-class loginFrom(FlaskForm):
+class loginForm(FlaskForm):
     username = StringField('Username')
     password = PasswordField('Password')
     next = HiddenField()
@@ -26,6 +26,12 @@ class loginFrom(FlaskForm):
         m.update(self.password.data.encode())
         passwd = m.hexdigest()
         return user if passwd == user.password else None
+
+class BookForm(FlaskForm):
+    title = StringField('Title', validators=[DataRequired()])
+    price = FloatField('Price', validators=[DataRequired()])
+    image = StringField('Image URL', validators=[DataRequired()])  # For simplicity, just a URL
+    submit = SubmitField('Save Changes')
 
 class AuthorForm(FlaskForm):
     id = HiddenField('id')
@@ -86,10 +92,10 @@ def save_author():
         return render_template(
             "edit-author.html",
             author =a, form=f)
-        
+
 @app.route("/login/",methods=("GET","POST" ,))
 def login():
-    f = loginFrom()
+    f = loginForm()
     if not f.is_submitted():
         f.next.data = request.args.get("next")
     elif f.validate_on_submit():
@@ -100,10 +106,47 @@ def login():
             return redirect(next)
     return render_template("login.html", form=f)
 
-
 @app.route("/logout/")
 def logout():
     logout_user()
     return redirect(url_for('home'))
 
-# denys baz
+@app.route("/search/", methods=["GET"])
+def search_books_by_author():
+    author_name = request.args.get('author_name', '')
+    if author_name:
+        authors = Author.query.filter(Author.name.ilike(f"%{author_name}%")).all()
+        books = []
+        for author in authors:
+            books.extend(author.books.all()) 
+
+        return render_template(
+            "home.html",
+            title="Books by Author",
+            books=books
+        )
+    else:
+        return render_template(
+            "home.html",
+            title="No Author Specified",
+            books=[]
+        )
+    
+@app.route("/edit-book/<int:id>", methods=["GET", "POST"])
+@login_required
+def edit_book(id):
+    book = Book.query.get_or_404(id)
+    form = BookForm(obj=book)  # Prepopulate form with book data
+
+    if form.validate_on_submit():
+        # Update the book's details
+        book.title = form.title.data
+        book.price = form.price.data
+        book.image = form.image.data
+
+        # Save the changes
+        db.session.commit()
+        flash(f"Book '{book.title}' updated successfully!", "success")
+        return redirect(url_for('detail', id=book.id-1))
+
+    return render_template('edit_book.html', form=form, book=book)

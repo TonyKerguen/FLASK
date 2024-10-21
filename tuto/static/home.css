@@ -1,18 +1,88 @@
-h1 {color: red;}
-div.sample{
-text-align: center;
-margin-left: 25%;
-margin-right: 25%;
-}
-main{
-margin-top: 8em;
-}
-footer{
-position: fixed;
-bottom: 0;
-width: 100%;
+h1 {
+    color: red;
 }
 
-main > .container {
+div.sample {
+    text-align: center;
+    margin-left: 25%;
+    margin-right: 25%;
+}
+
+main {
+    margin-top: 8em;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+main>.container {
     padding: 60px 15px 0;
-    }
+}
+
+.book-detail {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 30px auto;
+    max-width: 900px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.book-detail .book-info {
+    max-width: 500px;
+    margin-right: 20px;
+}
+
+.book-detail .book-info h1 {
+    font-size: 2.2em;
+    color: #333;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.book-detail .book-info ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+.book-detail .book-info ul li {
+    font-size: 1.1em;
+    margin-bottom: 10px;
+    color: #666;
+}
+
+.book-detail img {
+    max-width: 250px;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.book-detail .price {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #2e7d32;
+    margin-top: 20px;
+}
+
+.buy-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #2e7d32;
+    color: #fff;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+}
+
+.buy-btn:hover {
+    background-color: #1b5e20;
+}

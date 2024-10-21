@@ -21,4 +21,4 @@ from flask_sqlalchemy import SQLAlchemy
 app.config['SQLALCHEMY_DATABASE_URI'] = ('sqlite:///'+mkpath('../tuto.db'))
 db = SQLAlchemy(app)
 
-app.config['SECRET_KEY'] = "b4314bd8-340d-4c6d-968a-733c2b6fc403"
+app.config['SECRET_KEY'] = "b4314bd8-340d-4c6d-968a-733c2b6fc503"
